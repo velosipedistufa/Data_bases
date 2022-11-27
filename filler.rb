@@ -13,23 +13,24 @@ DB = PG.connect(dbname: 'lab2', password: '1234')
 
 Faker::Config.locale = 'en-US'
 
-DB.exec File.read('SQL/creating_tables.sql')
+#DB.exec File.read('SQL/creating_tables.sql')
+DB.exec File.read('lab2')
 
 #Tariff data
-DATA_PLAN_SPECS.times do
-  DB.exec "INSERT INTO data_plan_spec (
-            data_plan ,
-            max_speed_MBits ,
-            num_non_roam_state ,
-            monthly_subscription_fee
-        )
-        values ( 
-            '#{DB.escape(Faker::GreekPhilosophers.name)}',
-            #{rand(10..10000)},
-            #{rand(1..27)},
-            #{rand(7..58)}
-            );"
-end
+#DATA_PLAN_SPECS.times do
+#  DB.exec "INSERT INTO data_plan_spec (
+#            data_plan ,
+#            max_speed_MBits ,
+#            num_non_roam_state ,
+#            monthly_subscription_fee
+#        )
+#        values ( 
+#            '#{DB.escape(Faker::GreekPhilosophers.name)}',
+#            #{rand(10..10000)},
+#            #{rand(1..27)},
+#            #{rand(7..58)}
+#            );"
+#end
 
 PROVIDER.times do
     DB.exec "INSERT INTO provider(
@@ -48,18 +49,18 @@ end
 
 CONNECTIONS.times do
     DB.exec "INSERT INTO connections (
-        tel_num,
+	    installation_date,
+	    tel_num,
         abonent_id,
         provider_id,
-        plan_indebtedness,
-        installation_date
+        plan_indebtedness
     )
     values (
+	    '#{DB.escape(Faker::Date.between(from:'2000-01-01',to:'2002-12-12'))}'
         '#{DB.escape(Faker::PhoneNumber.phone_number)}'
         #{rand(NETWORK_ABONENTS)},
         #{rand(PROVIDER)},
-        #{rand(100)},
-        '#{DB.escape Faker::Date.between(from: '2000-01-01', to:'2022-12-12')}'
+        #{rand(100)}
         )"
 end
 
