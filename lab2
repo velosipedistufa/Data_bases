@@ -1,5 +1,5 @@
 DROP TABLE IF EXISTS connections CASCADE;
-DROP TABLE IF EXISTS data_plan_specs CASCADE;
+DROP TABLE IF EXISTS data_plan_spec CASCADE;
 DROP TABLE IF EXISTS network_abonent CASCADE;
 DROP TABLE IF EXISTS provider CASCADE;
 DROP TABLE IF EXISTS provider_specs CASCADE;
@@ -20,13 +20,12 @@ CREATE TABLE provider (
 
 CREATE TABLE connections (
 	connection_id INT GENERATED ALWAYS AS IDENTITY NOT NULL,
-	tel_num INT NOT NULL,
 	abonent_id INT NOT NULL PRIMARY KEY,
 	provider_id INT NOT NULL,
+	tel_num INT NOT NULL,
 	data_plan VARCHAR(64) NOT NULL,
 	plan_indebtedness INT NOT NULL,
 	installation_date DATE NOT NULL,
-	provider_name VARCHAR(64) NOT NULL,
 	CONSTRAINT fk_dapl
 		FOREIGN KEY (data_plan)
 		REFERENCES data_plan_spec (data_plan),
