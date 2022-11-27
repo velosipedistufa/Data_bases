@@ -1,0 +1,27 @@
+SELECT tablename, schemaname, tableowner
+FROM pg_catalog.pg_tables
+WHERE schemaname != 'pg_catalog'
+AND schemaname != 'information_schema'
+ORDER BY tablename ASC;
+
+SELECT * FROM airports_data WHERE timezone LIKE 'Asia%'
+ORDER BY 1 DESC;
+
+SELECT airport_code, timezone, airport_name FROM airports_data ad JOIN flights f
+ON f.departure_airport = ad.airport_code
+
+SELECT * FROM seats WHERE aircraft_code = 'SU9' AND seat_no LIKE '3%'
+ORDER BY 2 ASC;
+
+SELECT * FROM flights WHERE (scheduled_arrival - scheduled_departure) < '90 minutes'::INTERVAL 
+AND (scheduled_arrival-scheduled_departure) > '30 minutes'::INTERVAL
+ORDER BY 4 DESC;
+
+SELECT aircraft_code FROM aircrafts_data
+UNION ALL
+SELECT book_ref FROM bookings
+LIMIT 40;
+
+SELECT SUM (total_amount) AS total FROM bookings
+WHERE book_date < '2017-08-01 00:00:00+03';
+
